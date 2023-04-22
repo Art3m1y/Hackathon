@@ -32,4 +32,14 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
             refreshTokenRepository.save(refreshTokenUpdated);
         }
     }
+
+    @Override
+    public boolean existsById(long id) {
+        return refreshTokenRepository.existsById(id);
+    }
+
+    @Override
+    public void deleteById(long id) {
+        refreshTokenRepository.deleteById(id);
+    }
 }

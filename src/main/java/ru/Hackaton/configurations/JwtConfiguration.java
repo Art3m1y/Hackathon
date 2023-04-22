@@ -31,7 +31,7 @@ public class JwtConfiguration {
     @PostConstruct
     public void init() {
         verifierForAccessToken =  Jwts.parserBuilder()
-                .setSigningKey(secretKeyForRefreshToken)
+                .setSigningKey(secretKeyForAccessToken)
                 .build();
         verifierForRefreshToken = Jwts.parserBuilder()
                 .setSigningKey(secretKeyForRefreshToken)
@@ -49,13 +49,13 @@ public class JwtConfiguration {
                 .compact();
     }
 
-    public String generateRefreshToken(String username) {
+    public String generateRefreshToken(long id) {
         return Jwts.builder()
-                .setSubject(String.valueOf(username))
+                .setSubject(String.valueOf(id))
                 .setExpiration(Date.from(ZonedDateTime.now().plusMinutes(actionTimeOfRefreshTokenInMinutes).toInstant()))
                 .setIssuedAt(new Date())
                 .setIssuer(issuer)
-                .claim("username", username)
+                .claim("id", id)
                 .signWith(SignatureAlgorithm.HS256, secretKeyForRefreshToken)
                 .compact();
     }
@@ -68,7 +68,11 @@ public class JwtConfiguration {
         return verifierForRefreshToken.isSigned(token);
     }
 
-    public String getUsernameFromAccessToken(String token) {
-        return (String) verifierForAccessToken.parseClaimsJws(token).getBody().get("username");
+    public String getUsernameFromAccessToken(String accessToken) {
+        return (String) verifierForAccessToken.parseClaimsJws(accessToken).getBody().get("username");
+    }
+
+    public long getIdFromRefreshToken(String refreshToken) {
+        return (long) verifierForRefreshToken.parseClaimsJws(refreshToken).getBody().get("id");
     }
 }

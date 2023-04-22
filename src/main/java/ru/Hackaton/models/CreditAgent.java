@@ -17,6 +17,7 @@ public class CreditAgent {
     String name;
     String surname;
     String patronymic;
+    boolean isAdmin;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 }

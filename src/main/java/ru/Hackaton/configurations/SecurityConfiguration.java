@@ -23,7 +23,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration {
     private final UserDetailsService userDetailsService;
     private final JwtFilter jwtFilter;
@@ -44,7 +43,11 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.cors().and().csrf().disable()
+        return http.cors().and().csrf().disable().authorizeHttpRequests()
+                .requestMatchers("/api/auth/login").permitAll()
+                .requestMatchers("/api/admin/register/agent").hasRole("ADMIN")
+                .anyRequest().authenticated()
+                .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

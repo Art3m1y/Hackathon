@@ -21,12 +21,11 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtConfiguration jwtConfiguration;
     private final UserDetailsService userDetailsService;
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String path = request.getServletPath();
 
-        if (!path.startsWith("/api/auth/login") ) {
+        if (!path.startsWith("/api/auth/")) {
             checkAccessToken(request, response);
         }
 
@@ -41,11 +40,11 @@ public class JwtFilter extends OncePerRequestFilter {
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             } else {
                 try {
-                    String email = jwtConfiguration.getUsernameFromAccessToken(JWTToken);
+                    String username = jwtConfiguration.getUsernameFromAccessToken(JWTToken);
 
-                    UserDetails personDetails = userDetailsService.loadUserByUsername(email);
+                    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-                    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(personDetails, personDetails.getPassword(), personDetails.getAuthorities());
+                    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
 
                     if (SecurityContextHolder.getContext().getAuthentication() == null) {
                         SecurityContextHolder.getContext().setAuthentication(token);

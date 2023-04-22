@@ -2,9 +2,11 @@ package ru.Hackaton.controllers;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,11 +21,12 @@ import ru.Hackaton.services.RefreshTokenService;
 import ru.Hackaton.services.impl.CreditAgentDetails;
 
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-public class JwtController {
+public class AuthController {
     private final JwtConfiguration jwtConfiguration;
     private final CreditAgentService creditAgentService;
     private final RefreshTokenService refreshTokenService;
@@ -32,7 +35,7 @@ public class JwtController {
     private final int COOKIE_MAX_AGE = 259200;
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody CreditAgentAuthDto creditAgentAuthDto, HttpServletResponse response) {
+    public ResponseEntity<?> loginCreditAgent(@RequestBody CreditAgentAuthDto creditAgentAuthDto, HttpServletResponse response) {
         CreditAgent creditAgent = creditAgentMapper.mapToCreditAgent(creditAgentAuthDto);
 
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(creditAgent.getUsername(), creditAgent.getPassword());
@@ -48,8 +51,24 @@ public class JwtController {
         return returnRefreshAndAccessTokens(response, refreshToken, creditAgentAuthenticated.getUsername());
     }
 
+    @GetMapping("/logout")
+    public ResponseEntity<?> logoutCreditAgent(@CookieValue("refresh_token") Optional<String> refreshTokenFromCookie, HttpServletResponse response) {
+        if (refreshTokenFromCookie.isPresent()) {
+            String refreshToken = refreshTokenFromCookie.get();
+            if (jwtConfiguration.verifyRefreshToken(refreshToken) && refreshTokenService.existsById(jwtConfiguration.getIdFromRefreshToken(refreshToken))) {
+                Cookie deleteRefreshTokenCookie = new Cookie("refreshToken", null);
+                deleteRefreshTokenCookie.setMaxAge(0);
+                response.addCookie(deleteRefreshTokenCookie);
+                refreshTokenService.deleteById(jwtConfiguration.getIdFromRefreshToken(refreshToken));
+                return ResponseEntity.ok().build();
+            }
+        }
+
+        throw new RuntimeException("Токен обновления не смог пройти валидацию, либо он уже является не актуальным");
+    }
+
     private ResponseEntity<Map<String, String>> returnRefreshAndAccessTokens(HttpServletResponse response, RefreshToken refreshToken, String username) {
-        String refreshTokenGenerated = jwtConfiguration.generateRefreshToken(username);
+        String refreshTokenGenerated = jwtConfiguration.generateRefreshToken(refreshToken.getId());
 
         Cookie cookieWithRefreshToken = new Cookie("refresh_token", refreshTokenGenerated);
 
