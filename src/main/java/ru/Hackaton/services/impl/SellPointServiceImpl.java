@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import ru.Hackaton.models.CreditAgent;
 import ru.Hackaton.models.SellPoint;
 import ru.Hackaton.repositories.SellPointRepository;
 import ru.Hackaton.services.SellPointService;
@@ -48,5 +49,10 @@ public class SellPointServiceImpl implements SellPointService {
     @Override
     public void delete(long id) {
         sellPointRepository.deleteById(id);
+    }
+
+    @Override
+    public List<CreditAgent> getAgents(long id) {
+        return sellPointRepository.findById(id).get().getAgents();
     }
 }

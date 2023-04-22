@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.Hackaton.dtos.SellPointDto;
+import ru.Hackaton.dtos.mappers.CreditAgentMapper;
 import ru.Hackaton.dtos.mappers.SellPointMapper;
 import ru.Hackaton.services.SellPointService;
 
@@ -17,6 +18,7 @@ public class SellPointController {
 
     SellPointService sellPointService;
     SellPointMapper sellPointMapper;
+    CreditAgentMapper creditAgentMapper;
 
     @GetMapping()
     public ResponseEntity<?> findAll() {
@@ -35,14 +37,22 @@ public class SellPointController {
                 sellPointMapper.mapToSellPoint(sellPointDto))));
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable long id) {
         return ResponseEntity.ok(sellPointMapper.mapToSellPointDto(sellPointService.findById(id)));
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable long id) {
+    public ResponseEntity<?> delete(@PathVariable long id) {
         sellPointService.delete(id);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{id}/agents")
+    public ResponseEntity<?> getAgents(@PathVariable long id) {
+        return ResponseEntity.ok(creditAgentMapper.mapToCreditAgentDtoList(
+                sellPointService.getAgents(id)));
     }
 
 }

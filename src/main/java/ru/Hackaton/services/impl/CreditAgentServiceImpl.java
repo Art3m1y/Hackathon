@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.Hackaton.models.CreditAgent;
+import ru.Hackaton.models.SellPoint;
 import ru.Hackaton.repositories.CreditAgentRepository;
 import ru.Hackaton.services.CreditAgentService;
 
@@ -62,5 +63,10 @@ public class CreditAgentServiceImpl implements CreditAgentService {
         creditAgentRepository.save(creditAgent);
 
         return creditAgent;
+    }
+
+    @Override
+    public List<SellPoint> getPoints(String login) {
+        return creditAgentRepository.findById(login).get().getPoints();
     }
 }
