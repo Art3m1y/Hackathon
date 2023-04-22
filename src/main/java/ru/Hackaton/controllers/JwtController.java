@@ -11,24 +11,21 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import ru.Hackaton.configurations.JwtConfiguration;
 import ru.Hackaton.dtos.CreditAgentAuthDto;
-import ru.Hackaton.dtos.UserDto;
 import ru.Hackaton.dtos.mappers.CreditAgentMapper;
-import ru.Hackaton.dtos.mappers.UserMapper;
 import ru.Hackaton.models.CreditAgent;
 import ru.Hackaton.models.RefreshToken;
-import ru.Hackaton.models.User;
+import ru.Hackaton.services.CreditAgentService;
 import ru.Hackaton.services.RefreshTokenService;
-import ru.Hackaton.services.UserDetailsImpl;
-import ru.Hackaton.services.UserService;
+import ru.Hackaton.services.impl.CreditAgentDetails;
 
 import java.util.Map;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class JwtController {
     private final JwtConfiguration jwtConfiguration;
-    private final UserService userService;
+    private final CreditAgentService creditAgentService;
     private final RefreshTokenService refreshTokenService;
     private final AuthenticationManager authenticationManager;
     private final CreditAgentMapper creditAgentMapper;
@@ -42,13 +39,13 @@ public class JwtController {
 
         Authentication auth = authenticationManager.authenticate(token);
 
-        User userAuthenticated = ((UserDetailsImpl) auth.getPrincipal()).getUser();
+        CreditAgent creditAgentAuthenticated = ((CreditAgentDetails) auth.getPrincipal()).getUser();
 
-        RefreshToken refreshToken = new RefreshToken(userAuthenticated);
+        RefreshToken refreshToken = new RefreshToken(creditAgentAuthenticated);
 
-        refreshTokenService.updateRefreshToken(userAuthenticated, refreshToken);
+        refreshTokenService.updateRefreshToken(creditAgentAuthenticated, refreshToken);
 
-        return returnRefreshAndAccessTokens(response, refreshToken, userAuthenticated.getUsername());
+        return returnRefreshAndAccessTokens(response, refreshToken, creditAgentAuthenticated.getUsername());
     }
 
     private ResponseEntity<Map<String, String>> returnRefreshAndAccessTokens(HttpServletResponse response, RefreshToken refreshToken, String username) {

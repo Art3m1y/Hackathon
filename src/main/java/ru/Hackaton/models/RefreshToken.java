@@ -14,10 +14,10 @@ public class RefreshToken {
     private long id;
 
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    @JoinColumn(name = "agent_username", referencedColumnName = "username")
+    private CreditAgent creditAgent;
 
-    public RefreshToken(User user) {
-        this.user = user;
+    public RefreshToken(CreditAgent creditAgent) {
+        this.creditAgent = creditAgent;
     }
 }

@@ -1,16 +1,16 @@
-package ru.Hackaton.services;
+package ru.Hackaton.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.Hackaton.models.User;
+import ru.Hackaton.models.CreditAgent;
 
 import java.util.Collection;
 import java.util.Collections;
 
 @RequiredArgsConstructor
-public class UserDetailsImpl implements UserDetails {
-    private final User user;
+public class CreditAgentDetails implements UserDetails {
+    private final CreditAgent creditAgent;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -19,12 +19,12 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return creditAgent.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return creditAgent.getUsername();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class UserDetailsImpl implements UserDetails {
         return true;
     }
 
-    public User getUser() {
-        return user;
+    public CreditAgent getUser() {
+        return creditAgent;
     }
 }

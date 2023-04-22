@@ -11,5 +11,5 @@ public interface CreditAgentService {
     CreditAgent save(CreditAgent newCreditAgent);
     CreditAgent upgrade(CreditAgent creditAgentToUpdate);
     void delete(String login);
-
+    CreditAgent registerCreditAgent(CreditAgent creditAgent);
 }

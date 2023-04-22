@@ -1,11 +1,11 @@
-package ru.Hackaton.services;
+package ru.Hackaton.services.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import ru.Hackaton.models.CreditAgent;
 import ru.Hackaton.models.RefreshToken;
-import ru.Hackaton.models.User;
 import ru.Hackaton.repositories.RefreshTokenRepository;
+import ru.Hackaton.services.RefreshTokenService;
 
 import java.util.Optional;
 
@@ -13,20 +13,19 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RefreshTokenServiceImpl implements RefreshTokenService {
     private final RefreshTokenRepository refreshTokenRepository;
-
     @Override
     public void saveRefreshToken(RefreshToken refreshToken) {
         refreshTokenRepository.save(refreshToken);
     }
 
     @Override
-    public void updateRefreshToken(User userAuthenticated, RefreshToken refreshTokenUpdated) {
-        Optional<RefreshToken> refreshTokenOptional = refreshTokenRepository.findByUserId(userAuthenticated.getId());
+    public void updateRefreshToken(CreditAgent creditAgentAuthenticated, RefreshToken refreshTokenUpdated) {
+        Optional<RefreshToken> refreshTokenOptional = refreshTokenRepository.findByCreditAgent(creditAgentAuthenticated);
 
         if (refreshTokenOptional.isPresent()) {
             RefreshToken refreshToken = refreshTokenOptional.get();
 
-            refreshToken.setUser(userAuthenticated);
+            refreshToken.setCreditAgent(creditAgentAuthenticated);
 
             refreshTokenRepository.save(refreshToken);
         } else {

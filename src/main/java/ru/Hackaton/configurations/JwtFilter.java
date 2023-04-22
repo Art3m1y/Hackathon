@@ -11,6 +11,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import ru.Hackaton.services.CreditAgentService;
+import ru.Hackaton.services.impl.CreditAgentDetailsService;
+
 import java.io.IOException;
 
 @Component
@@ -23,7 +26,7 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String path = request.getServletPath();
 
-        if (!path.startsWith("/catalog") && (!(path.startsWith("/auth") && !path.equals("/auth/logout")) && (!path.startsWith("/image"))) && (!path.startsWith("/avatar"))) {
+        if (!path.startsWith("/api/auth/login") ) {
             checkAccessToken(request, response);
         }
 

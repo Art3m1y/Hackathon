@@ -12,7 +12,6 @@ import java.util.Date;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CreditAgent {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     String username;
     String password;
     String name;
@@ -20,5 +19,4 @@ public class CreditAgent {
     String patronymic;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
-
 }
