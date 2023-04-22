@@ -7,7 +7,8 @@ import java.util.Optional;
 
 public interface ShopService {
     List<Shop> findAll();
-    Optional<Shop> findById(long id);
+    Shop findById(long id);
     Shop save(Shop newShop);
     Shop upgrade(Shop shopToUpgrade);
+    void delete(long id);
 }

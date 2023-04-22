@@ -24,8 +24,8 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public Optional<Shop> findById(long id) {
-        return shopRepository.findById(id);
+    public Shop findById(long id) {
+        return shopRepository.findById(id).orElseThrow(()->new RuntimeException("Не существует магазина с таким id"));
     }
 
     @Override
@@ -43,5 +43,10 @@ public class ShopServiceImpl implements ShopService {
         } else {
             throw new NullPointerException("Can't save null");
         }
+    }
+
+    @Override
+    public void delete(long id) {
+        shopRepository.deleteById(id);
     }
 }

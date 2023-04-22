@@ -8,9 +8,9 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface CreditAgentMapper {
-    CreditAgentDto mapToCreditAgentDto(CreditAgent agent);
-    CreditAgent mapToCreditAgent(CreditAgentDto dto);
+    CreditAgentDto mapToCreditAgentDto(CreditAgent creditAgent);
+    CreditAgent mapToCreditAgent(CreditAgentDto creditAgentDto);
 
-    List<CreditAgentDto> mapToCreditAgentDtoList(List<CreditAgent> list);
-    List<CreditAgent> mapToCreditAgentList(List<CreditAgentDto> dtoList);
+    List<CreditAgentDto> mapToCreditAgentDtoList(List<CreditAgent> creditAgentList);
+    List<CreditAgent> mapToCreditAgentList(List<CreditAgentDto> creditAgentDtoList);
 }

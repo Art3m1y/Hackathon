@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import ru.Hackaton.dtos.CreditAgentDto;
 import ru.Hackaton.models.CreditAgent;
 import ru.Hackaton.repositories.CreditAgentRepository;
 import ru.Hackaton.services.CreditAgentService;
@@ -24,8 +25,9 @@ public class CreditAgentServiceImpl implements CreditAgentService {
     }
 
     @Override
-    public Optional<CreditAgent> findByLogin(String login) {
-        return creditAgentRepository.findById(login);
+    public CreditAgent findByLogin(String login) {
+        return creditAgentRepository.findById(login)
+                .orElseThrow(() -> new RuntimeException("Не существует пользователя с таким логином"));
     }
 
     @Override
@@ -43,5 +45,10 @@ public class CreditAgentServiceImpl implements CreditAgentService {
         } else {
             throw new NullPointerException("Can't save null");
         }
+    }
+
+    @Override
+    public void delete(String login) {
+        creditAgentRepository.deleteById(login);
     }
 }

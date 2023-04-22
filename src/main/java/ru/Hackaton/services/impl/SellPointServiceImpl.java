@@ -24,8 +24,9 @@ public class SellPointServiceImpl implements SellPointService {
     }
 
     @Override
-    public Optional<SellPoint> findById(long id) {
-        return sellPointRepository.findById(id);
+    public SellPoint findById(long id) {
+        return sellPointRepository.findById(id).
+                orElseThrow(()-> new RuntimeException("Не существует троговой точки с таким id"));
     }
 
     @Override
@@ -42,5 +43,10 @@ public class SellPointServiceImpl implements SellPointService {
         } else {
             throw new NullPointerException("Can't save null");
         }
+    }
+
+    @Override
+    public void delete(long id) {
+        sellPointRepository.deleteById(id);
     }
 }

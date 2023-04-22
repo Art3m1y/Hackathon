@@ -24,8 +24,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Optional<Order> findById(long id) {
-        return orderRepository.findById(id);
+    public Order findById(long id) {
+        return orderRepository.findById(id).orElseThrow(()->new RuntimeException("Не существует заказа с таким id"));
     }
 
     @Override
@@ -43,5 +43,10 @@ public class OrderServiceImpl implements OrderService {
         } else {
             throw new NullPointerException("Can't save null");
         }
+    }
+
+    @Override
+    public void delete(long id) {
+        orderRepository.deleteById(id);
     }
 }

@@ -8,9 +8,9 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface SellPointMapper {
-    SellPointDto mapToSellPointDto(SellPoint point);
-    SellPoint mapToSellPoint(SellPointDto dto);
+    SellPointDto mapToSellPointDto(SellPoint sellPoint);
+    SellPoint mapToSellPoint(SellPointDto sellPointDto);
 
-    List<SellPointDto> mapToSellPointDtoList(List<SellPoint> list);
-    List<SellPoint> mapToSellPointList(List<SellPointDto> dtoList);
+    List<SellPointDto> mapToSellPointDtoList(List<SellPoint> sellPointList);
+    List<SellPoint> mapToSellPointList(List<SellPointDto> sellPointDtoList);
 }

@@ -8,7 +8,8 @@ import java.util.Optional;
 
 public interface SellPointService {
     List<SellPoint> findAll();
-    Optional<SellPoint> findById(long id);
+    SellPoint findById(long id);
     SellPoint save(SellPoint newSellPoint);
     SellPoint upgrade(SellPoint sellPointToUpgrade);
+    void delete(long id);
 }

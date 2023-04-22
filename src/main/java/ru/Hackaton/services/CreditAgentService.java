@@ -7,8 +7,9 @@ import java.util.Optional;
 
 public interface CreditAgentService {
     List<CreditAgent> findAll();
-    Optional<CreditAgent> findByLogin(String login);
+    CreditAgent findByLogin(String login);
     CreditAgent save(CreditAgent newCreditAgent);
     CreditAgent upgrade(CreditAgent creditAgentToUpdate);
+    void delete(String login);
 
 }
