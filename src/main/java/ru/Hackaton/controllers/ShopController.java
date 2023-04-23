@@ -34,12 +34,12 @@ public class ShopController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable long id) {
+    public ResponseEntity<?> findById(@PathVariable String id) {
         return ResponseEntity.ok(shopMapper.mapToShopDto(shopService.findById(id)));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable long id) {
+    public void delete(@PathVariable String id) {
         shopService.delete(id);
     }
 }

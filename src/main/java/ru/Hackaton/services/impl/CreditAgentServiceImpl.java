@@ -67,7 +67,7 @@ public class CreditAgentServiceImpl implements CreditAgentService {
 
     @Override
     public List<SellPoint> getPoints(String login) {
-        return creditAgentRepository.findById(login).get().getPoints();
+        return creditAgentRepository.findById(login).orElseThrow(() -> new RuntimeException("Кредитного агента с таким логином не существует")).getPoints();
     }
 
     @Override

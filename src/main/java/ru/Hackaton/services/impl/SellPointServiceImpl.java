@@ -25,7 +25,7 @@ public class SellPointServiceImpl implements SellPointService {
     }
 
     @Override
-    public SellPoint findById(long id) {
+    public SellPoint findById(String id) {
         return sellPointRepository.findById(id).
                 orElseThrow(()-> new RuntimeException("Не существует троговой точки с таким id"));
     }
@@ -47,12 +47,12 @@ public class SellPointServiceImpl implements SellPointService {
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(String id) {
         sellPointRepository.deleteById(id);
     }
 
     @Override
-    public List<CreditAgent> getAgents(long id) {
+    public List<CreditAgent> getAgents(String id) {
         return sellPointRepository.findById(id).get().getAgents();
     }
 }

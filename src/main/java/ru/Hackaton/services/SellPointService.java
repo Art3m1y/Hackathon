@@ -13,5 +13,5 @@ public interface SellPointService {
     SellPoint save(SellPoint newSellPoint);
     SellPoint upgrade(SellPoint sellPointToUpgrade);
     void delete(String id);
-    List<CreditAgent> getAgents(long id);
+    List<CreditAgent> getAgents(String id);
 }

@@ -7,7 +7,6 @@ import lombok.experimental.FieldDefaults;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ShopDto {
-    long id;
-
+    String id;
     String name;
 }

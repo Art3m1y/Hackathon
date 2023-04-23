@@ -1,5 +1,6 @@
 package ru.Hackaton.dtos;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -8,7 +9,7 @@ import ru.Hackaton.utils.PaymentMethod;
 @Data
 @FieldDefaults(level = AccessLevel.PACKAGE)
 public class OrderDto {
-    String id;
+    long id;
     PaymentMethod paymentMethod;
 
     String phoneNumber;

@@ -19,6 +19,6 @@ public class SellPoint {
     @OneToOne(cascade = CascadeType.ALL)
     Shop shop;
 
-    @OneToMany
+    @ManyToMany
     List<CreditAgent> agents;
 }

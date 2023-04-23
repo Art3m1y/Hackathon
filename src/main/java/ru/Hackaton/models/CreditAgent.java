@@ -21,6 +21,6 @@ public class CreditAgent {
     boolean isAdmin;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
-    @OneToMany
+    @ManyToMany
     List<SellPoint> points;
 }

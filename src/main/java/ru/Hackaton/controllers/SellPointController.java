@@ -36,13 +36,15 @@ public class SellPointController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<?> findById(@PathVariable long id) {
+    public ResponseEntity<?> findById(@PathVariable String id) {
         return ResponseEntity.ok(sellPointMapper.mapToSellPointDto(sellPointService.findById(id)));
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable long id) {
+    public ResponseEntity<?> delete(@PathVariable String id) {
         sellPointService.delete(id);
+
+        return ResponseEntity.ok().build();
     }
 
 }

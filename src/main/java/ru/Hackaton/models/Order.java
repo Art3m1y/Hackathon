@@ -1,9 +1,6 @@
 package ru.Hackaton.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -12,11 +9,13 @@ import ru.Hackaton.utils.PaymentMethod;
 @Entity
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(name = "OrderTable")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
+    @Enumerated(value = EnumType.ORDINAL)
     PaymentMethod paymentMethod;
 
     String phoneNumber;

@@ -4,7 +4,7 @@ databaseChangeLog:
       author: Art3m1y
       changes:
         - createTable:
-            tableName: shop
+            tableName: sell_point
             columns:
               - column:
                   name: id
@@ -16,3 +16,10 @@ databaseChangeLog:
                   type: varchar(50)
                   constraints:
                     nullable: false
+              - column:
+                  name: shop_id
+                  type: varchar(32)
+                  constraints:
+                    unique: true
+                    nullable: false
+              -
