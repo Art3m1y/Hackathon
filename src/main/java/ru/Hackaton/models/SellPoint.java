@@ -15,7 +15,7 @@ public class SellPoint {
     @Id
     String id;
     String name;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne()
     Shop shop;
     @ManyToMany
     List<CreditAgent> agents;

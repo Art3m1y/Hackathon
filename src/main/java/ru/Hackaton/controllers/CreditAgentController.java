@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.Hackaton.dtos.CreditAgentDto;
 import ru.Hackaton.dtos.CreditAgentRegisterDto;
 import ru.Hackaton.dtos.mappers.CreditAgentMapper;
+import ru.Hackaton.dtos.mappers.OrderMapper;
 import ru.Hackaton.dtos.mappers.SellPointMapper;
 import ru.Hackaton.models.CreditAgent;
 import ru.Hackaton.services.CreditAgentService;
@@ -26,6 +27,7 @@ public class CreditAgentController {
     CreditAgentService creditAgentService;
     CreditAgentMapper creditAgentMapper;
     SellPointMapper sellPointMapper;
+    OrderMapper orderMapper;
     UsernameValidator usernameValidator;
 
     @GetMapping()
@@ -69,5 +71,11 @@ public class CreditAgentController {
     public ResponseEntity<?> getPoints(@PathVariable String login) {
         return ResponseEntity.ok(sellPointMapper.mapToSellPointDtoList(
                 creditAgentService.getPoints(login)));
+    }
+
+    @GetMapping("{login}/orders")
+    public ResponseEntity<?> getOrders(@PathVariable String login) {
+        return ResponseEntity.ok(orderMapper.mapToOrderDtoList(
+                creditAgentService.getOrders(login)));
     }
 }

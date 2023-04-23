@@ -1,12 +1,15 @@
 package ru.Hackaton.services.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import ru.Hackaton.models.CreditAgent;
 import ru.Hackaton.models.SellPoint;
+import ru.Hackaton.repositories.CreditAgentRepository;
 import ru.Hackaton.repositories.SellPointRepository;
+import ru.Hackaton.services.CreditAgentService;
 import ru.Hackaton.services.SellPointService;
 
 import java.util.Date;
@@ -19,6 +22,7 @@ import java.util.Optional;
 public class SellPointServiceImpl implements SellPointService {
 
     SellPointRepository sellPointRepository;
+    CreditAgentRepository creditAgentRepository;
 
     @Override
     public List<SellPoint> findAll() {
@@ -50,7 +54,16 @@ public class SellPointServiceImpl implements SellPointService {
     }
 
     @Override
+    @Transactional
     public void delete(String id) {
+        SellPoint point = sellPointRepository.findById(id).orElseThrow(
+                ()-> new RuntimeException("Нет точки с таким идентификатором"));
+
+        point.getAgents().forEach(agent ->
+            agent.getPoints().remove(point));
+
+        creditAgentRepository.saveAll(point.getAgents());
+
         sellPointRepository.deleteById(id);
     }
 

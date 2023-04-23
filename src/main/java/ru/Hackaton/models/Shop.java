@@ -14,6 +14,8 @@ public class Shop {
     @Id
     String id;
     String name;
+    @OneToOne(cascade = CascadeType.REMOVE)
+    SellPoint sellPoint;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 

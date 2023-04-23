@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.Hackaton.models.CreditAgent;
+import ru.Hackaton.models.Order;
 import ru.Hackaton.models.SellPoint;
 import ru.Hackaton.repositories.CreditAgentRepository;
 import ru.Hackaton.services.CreditAgentService;
@@ -69,6 +70,12 @@ public class CreditAgentServiceImpl implements CreditAgentService {
     public List<SellPoint> getPoints(String login) {
         return creditAgentRepository.findById(login).orElseThrow(() -> new RuntimeException(
                 "Кредитного агента с таким логином не существует")).getPoints();
+    }
+
+    @Override
+    public List<Order> getOrders(String username) {
+        return creditAgentRepository.findById(username).orElseThrow(()-> new RuntimeException(
+                "Не сущетсвует агента с таким идентификатором")).getOrders();
     }
 
     @Override

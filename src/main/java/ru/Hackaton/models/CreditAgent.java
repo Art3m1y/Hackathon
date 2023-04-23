@@ -20,7 +20,10 @@ public class CreditAgent {
     String patronymic;
     boolean isAdmin;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+    Date createdAt;
     @ManyToMany
     List<SellPoint> points;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    List<Order> orders;
 }
