@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -20,4 +21,6 @@ public class CreditAgent {
     boolean isAdmin;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+    @OneToMany
+    List<SellPoint> points;
 }
