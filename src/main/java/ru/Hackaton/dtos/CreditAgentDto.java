@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CreditAgentDto {
 
-    String login;
+    String username;
 
     String name;
 }

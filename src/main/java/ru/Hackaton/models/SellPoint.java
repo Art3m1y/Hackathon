@@ -1,6 +1,8 @@
 package ru.Hackaton.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -14,6 +16,8 @@ import java.util.List;
 public class SellPoint {
     @Id
     String id;
+    @NotNull
+    @Size(max = 50)
     String name;
     @OneToOne(cascade = CascadeType.ALL)
     Shop shop;

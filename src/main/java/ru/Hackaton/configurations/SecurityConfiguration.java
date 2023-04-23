@@ -45,12 +45,9 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.cors().and().csrf().disable().authorizeHttpRequests()
                 .requestMatchers("/api/auth/login").permitAll()
-                .requestMatchers("/api/point").hasRole("ADMIN")
-                .requestMatchers("/api/shop").hasRole("ADMIN")
                 .requestMatchers("/api/order").hasRole("AGENT")
                 .requestMatchers("/api/order/*").hasRole("AGENT")
-                .requestMatchers("/api/order/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
+                .anyRequest().anonymous()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -1,5 +1,0 @@
-databaseChangeLog:
-  - include:
-      file: db/create-main-tables/create-table-shop.yaml
-  - include:
-      file: db/create-main-tables/create-table-sell-point.yaml

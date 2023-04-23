@@ -1,0 +1,44 @@
+version: '3.5'
+
+services:
+  db:
+    container_name: db
+    ports:
+      - "7777:5432"
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=DHprGcpMyZ87D1ysBcJNvDF3YBjSNhR7zGR7kB0IZoyd6ZZ7RJ
+      - POSTGRES_DB=credit-application
+    image: postgres:12.13-alpine3.17
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    volumes:
+      - postgres:/var/lib/postgresql/data
+  credit-application:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: credit-application
+    ports:
+      - "8080:8080"
+    environment:
+      TOKEN_ACCESS_ACTION_TIME: 30
+      TOKEN_ACCESS_SECRET_KEY: ZEofmFV09ofH9ZBp55rGZEofmFV09ofH9ZBp55rGZEofmFV09ofH9ZBp55rG
+      TOKEN_REFRESH_ACTION_TIME: 4320
+      TOKEN_REFRESH_SECRET_KEY: sap5sap5LjhsJCr60bxquGLXLjhsJsap5LjhsJCr60bxquGLXCr60bxquGLX
+      BACKEND_URL: https://localhost:8888
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      POSTGRES_USERNAME: admin
+      POSTGRES_DB: credit-application
+      POSTGRES_PASSWORD: DHprGcpMyZ87D1ysBcJNvDF3YBjSNhR7zGR7kB0IZoyd6ZZ7RJ
+      SERVER_PORT: 8080
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres:

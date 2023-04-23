@@ -18,6 +18,7 @@
         <jjwt.version>0.11.5</jjwt.version>
         <mapstruct.version>1.5.3.Final</mapstruct.version>
         <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
+        <postgresql.version>42.6.0</postgresql.version>
     </properties>
     <dependencies>
         <dependency>
@@ -35,22 +36,12 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.6.0</version>
+            <version>${postgresql.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
@@ -100,6 +91,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>credit-project</finalName>
     </build>
 
 </project>
