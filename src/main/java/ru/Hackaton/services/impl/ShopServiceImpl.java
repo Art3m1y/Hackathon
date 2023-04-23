@@ -8,6 +8,7 @@ import ru.Hackaton.models.Shop;
 import ru.Hackaton.repositories.ShopRepository;
 import ru.Hackaton.services.ShopService;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +31,8 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public Shop save(Shop newShop) {
+        newShop.setCreatedAt(new Date());
+
         return shopRepository.save(newShop);
     }
 

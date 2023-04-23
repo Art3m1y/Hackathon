@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.experimental.FieldDefaults;
 import ru.Hackaton.utils.PaymentMethod;
 
+import java.util.Date;
+
 @Entity
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -23,4 +25,7 @@ public class Order {
     String category;
 
     double price;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
 }

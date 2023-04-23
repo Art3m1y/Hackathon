@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -13,12 +14,11 @@ import java.util.List;
 public class SellPoint {
     @Id
     String id;
-
     String name;
-
     @OneToOne(cascade = CascadeType.ALL)
     Shop shop;
-
     @ManyToMany
     List<CreditAgent> agents;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
 }

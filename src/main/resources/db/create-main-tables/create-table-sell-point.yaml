@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: create-table-owner-with-linked-to-item-table
+      id: create-table-sell-point
       author: Art3m1y
       changes:
         - createTable:
@@ -22,4 +22,5 @@ databaseChangeLog:
                   constraints:
                     unique: true
                     nullable: false
-              -
+                    foreignKeyName: shop_id_foreign_key
+                    references: shop(id)

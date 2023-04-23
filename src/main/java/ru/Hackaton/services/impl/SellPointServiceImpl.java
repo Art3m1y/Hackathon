@@ -9,6 +9,7 @@ import ru.Hackaton.models.SellPoint;
 import ru.Hackaton.repositories.SellPointRepository;
 import ru.Hackaton.services.SellPointService;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +33,8 @@ public class SellPointServiceImpl implements SellPointService {
 
     @Override
     public SellPoint save(SellPoint newSellPoint) {
+        newSellPoint.setCreatedAt(new Date());
+
         return sellPointRepository.save(newSellPoint);
     }
 

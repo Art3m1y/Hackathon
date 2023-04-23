@@ -1,12 +1,11 @@
 package ru.Hackaton.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
+
+import java.util.Date;
 
 @Entity
 @Data
@@ -15,5 +14,7 @@ public class Shop {
     @Id
     String id;
     String name;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
 
 }

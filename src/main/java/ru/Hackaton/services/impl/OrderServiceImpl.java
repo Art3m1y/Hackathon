@@ -8,6 +8,7 @@ import ru.Hackaton.models.Order;
 import ru.Hackaton.repositories.OrderRepository;
 import ru.Hackaton.services.OrderService;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +31,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order save(Order newOrder) {
+        newOrder.setCreatedAt(new Date());
+
         return orderRepository.save(newOrder);
     }
 

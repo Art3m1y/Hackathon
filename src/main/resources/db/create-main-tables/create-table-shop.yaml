@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: create-table-owner-with-linked-to-item-table
+      id: create-table-shop
       author: Art3m1y
       changes:
         - createTable:
