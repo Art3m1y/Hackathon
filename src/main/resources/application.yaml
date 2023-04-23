@@ -1,0 +1,25 @@
+server:
+  port: 8888
+
+backend-url: http://localhost:8888
+
+jwt:
+  token:
+    access:
+      secret: ZEofmFV09ofH9ZBp55rGZEofmFV09ofH9ZBp55rGZEofmFV09ofH9ZBp55rG
+      action-time: 30
+    refresh:
+      secret: sap5sap5LjhsJCr60bxquGLXLjhsJsap5LjhsJCr60bxquGLXCr60bxquGLX
+      action-time: 4320
+
+spring:
+  application:
+    name: CreditApplication
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    password: admin
+    username: postgres
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/master.yaml
