@@ -34,7 +34,10 @@ public class CreditAgent {
     @OneToOne(mappedBy = "creditAgent", cascade = CascadeType.REMOVE)
     private RefreshToken refreshToken;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+    Date createdAt;
     @ManyToMany
     List<SellPoint> points;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    List<Order> orders;
 }

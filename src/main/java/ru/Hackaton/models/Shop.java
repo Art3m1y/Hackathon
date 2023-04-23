@@ -18,6 +18,8 @@ public class Shop {
     @NotNull
     @Size(max = 50)
     String name;
+    @OneToOne(cascade = CascadeType.REMOVE)
+    SellPoint sellPoint;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 

@@ -19,7 +19,7 @@ public class SellPoint {
     @NotNull
     @Size(max = 50)
     String name;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne()
     Shop shop;
     @ManyToMany
     List<CreditAgent> agents;
