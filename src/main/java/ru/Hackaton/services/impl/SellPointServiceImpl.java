@@ -53,6 +53,8 @@ public class SellPointServiceImpl implements SellPointService {
 
     @Override
     public List<CreditAgent> getAgents(String id) {
-        return sellPointRepository.findById(id).get().getAgents();
+        return sellPointRepository.findById(id).orElseThrow(()->
+                new RuntimeException("Нет точки с таким идентификатором"))
+                .getAgents();
     }
 }

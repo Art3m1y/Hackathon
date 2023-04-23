@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.Hackaton.dtos.CreditAgentDto;
 import ru.Hackaton.dtos.mappers.CreditAgentMapper;
+import ru.Hackaton.dtos.mappers.SellPointMapper;
 import ru.Hackaton.services.CreditAgentService;
 
 @RestController
@@ -17,6 +18,7 @@ public class CreditAgentController {
 
     CreditAgentService creditAgentService;
     CreditAgentMapper creditAgentMapper;
+    SellPointMapper sellPointMapper;
 
     @GetMapping()
     public ResponseEntity<?> findAll() {
@@ -42,7 +44,15 @@ public class CreditAgentController {
     }
 
     @DeleteMapping("/{login}")
-    public void delete(@PathVariable String login) {
+    public ResponseEntity<?> delete(@PathVariable String login) {
         creditAgentService.delete(login);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{login}/points")
+    public ResponseEntity<?> getPoints(@PathVariable String login) {
+        return ResponseEntity.ok(sellPointMapper.mapToSellPointDtoList(
+                creditAgentService.getPoints(login)));
     }
 }
