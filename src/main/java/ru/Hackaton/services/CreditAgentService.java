@@ -10,7 +10,6 @@ import java.util.Optional;
 public interface CreditAgentService {
     List<CreditAgent> findAll();
     CreditAgent findByLogin(String login);
-    CreditAgent save(CreditAgent newCreditAgent);
     CreditAgent upgrade(CreditAgent creditAgentToUpdate);
     void delete(String login);
     CreditAgent registerCreditAgent(CreditAgent creditAgent);

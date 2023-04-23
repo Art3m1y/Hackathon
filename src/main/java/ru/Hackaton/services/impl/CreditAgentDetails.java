@@ -6,19 +6,25 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.Hackaton.models.CreditAgent;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @RequiredArgsConstructor
 public class CreditAgentDetails implements UserDetails {
     private final CreditAgent creditAgent;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> roles = new ArrayList<>();
+
+        roles.add(new SimpleGrantedAuthority("ROLE_AGENT"));
+
         if (creditAgent.isAdmin()) {
-            return Collections.singleton(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            roles.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
 
-        return Collections.emptyList();
+        return roles;
     }
 
     @Override
