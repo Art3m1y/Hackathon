@@ -1,0 +1,26 @@
+server:
+  port: 8888
+
+backend-url: http://localhost:8888
+
+jwt:
+  token:
+    access:
+      secret: ${TOKEN_ACCESS_SECRET_KEY}
+      action-time: ${TOKEN_ACCESS_ACTION_TIME}
+    refresh:
+      secret: ${TOKEN_REFRESH_SECRET_KEY}
+      action-time: ${TOKEN_REFRESH_ACTION_TIME}
+
+spring:
+  application:
+    name: CreditApplication
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+    password: ${POSTGRES_PASSWORD}
+    username: ${POSTGRES_USERNAME}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
