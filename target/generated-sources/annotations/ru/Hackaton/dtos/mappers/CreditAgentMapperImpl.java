@@ -11,7 +11,7 @@ import ru.Hackaton.models.CreditAgent;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-04-23T13:31:49+0300",
+    date = "2023-04-23T17:49:10+0300",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 18.0.2 (Amazon.com Inc.)"
 )
 @Component

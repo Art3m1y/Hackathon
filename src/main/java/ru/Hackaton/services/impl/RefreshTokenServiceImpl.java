@@ -42,4 +42,9 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     public void deleteById(long id) {
         refreshTokenRepository.deleteById(id);
     }
+
+    @Override
+    public RefreshToken findById(long idFromRefreshToken) {
+        return refreshTokenRepository.findById(idFromRefreshToken).orElseThrow(() -> new RuntimeException("Рефреш токена с таким идентификатором не существует"));
+    }
 }

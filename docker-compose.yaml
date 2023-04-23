@@ -1,6 +1,31 @@
 version: '3.5'
 
 services:
+  nginx:
+    container_name: nginx
+    image: nginx:1.13
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - credit-application
+      - db
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+      - web-root:/var/www/html
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - dhparam:/etc/ssl/certs
+  certbot:
+      image: certbot/certbot
+      depends_on:
+        - nginx
+      container_name: certbot
+      volumes:
+        - certbot-etc:/etc/letsencrypt
+        - certbot-var:/var/lib/letsencrypt
+        - web-root:/var/www/html
+      command: certonly --webroot --webroot-path=/var/www/html --email artem.kuryshkin@gmail.com --agree-tos --no-eff-email --staging -d credit.art3m1y.me
   db:
     container_name: db
     ports:
@@ -18,12 +43,10 @@ services:
     volumes:
       - postgres:/var/lib/postgresql/data
   credit-application:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: art3m1y/credit-application:1.0.0
     container_name: credit-application
     ports:
-      - "8080:8080"
+      - "8080:8888"
     environment:
       TOKEN_ACCESS_ACTION_TIME: 30
       TOKEN_ACCESS_SECRET_KEY: ZEofmFV09ofH9ZBp55rGZEofmFV09ofH9ZBp55rGZEofmFV09ofH9ZBp55rG
@@ -35,10 +58,18 @@ services:
       POSTGRES_USERNAME: admin
       POSTGRES_DB: credit-application
       POSTGRES_PASSWORD: DHprGcpMyZ87D1ysBcJNvDF3YBjSNhR7zGR7kB0IZoyd6ZZ7RJ
-      SERVER_PORT: 8080
     depends_on:
       db:
         condition: service_healthy
 
 volumes:
   postgres:
+  certbot-etc:
+  certbot-var:
+  web-root:
+  dhparam:
+    driver: local
+    driver_opts:
+      type: none
+      device: /tmp/dhparam/
+      o: bind

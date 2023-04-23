@@ -1,2 +1,0 @@
-insert into credit_agent (username, created_at, is_admin, name, password, patronymic, surname)
-values ('admin', '2023-04-23 13:01:27.436000', true, 'Artem', '$2a$10$.bG8Ac2leqVm6T6kNSKMIu0bhVWhL1gwON/Bn2smtPZRfm2OoDfXC', 'Kuryshkin', 'Dmitrievich');

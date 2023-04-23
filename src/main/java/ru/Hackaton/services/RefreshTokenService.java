@@ -9,4 +9,5 @@ public interface RefreshTokenService {
     boolean existsById(long id);
 
     void deleteById(long id);
+    RefreshToken findById(long idFromRefreshToken);
 }

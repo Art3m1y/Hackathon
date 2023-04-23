@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -65,6 +66,21 @@ public class AuthController {
                 response.addCookie(deleteRefreshTokenCookie);
                 refreshTokenService.deleteById(jwtConfiguration.getIdFromRefreshToken(refreshToken));
                 return ResponseEntity.ok().build();
+            }
+        }
+
+        throw new RuntimeException("Токен обновления не смог пройти валидацию, либо он уже является не актуальным");
+    }
+
+    @GetMapping("/refresh")
+    public ResponseEntity<Map<String, String>> getNewRefreshToken(@CookieValue("refreshToken") Optional<String> refreshTokenFromCookie) {
+        if (refreshTokenFromCookie.isPresent()) {
+            String refreshToken = refreshTokenFromCookie.get();
+            if (jwtConfiguration.verifyRefreshToken(refreshToken) && refreshTokenService.existsById(jwtConfiguration.getIdFromRefreshToken(refreshToken))) {
+                RefreshToken refreshTokenFromDB = refreshTokenService.findById(jwtConfiguration.getIdFromRefreshToken(refreshToken));
+                CreditAgent creditAgent = refreshTokenFromDB.getCreditAgent();
+                String accessToken = jwtConfiguration.generateAccessToken(creditAgent.getUsername(), creditAgent.getName(), creditAgent.getSurname(), creditAgent.getPatronymic(), creditAgent.isAdmin());
+                return new ResponseEntity<>(Map.of("accessToken", accessToken), HttpStatus.OK);
             }
         }
 
