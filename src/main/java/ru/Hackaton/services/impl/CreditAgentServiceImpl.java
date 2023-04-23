@@ -34,11 +34,6 @@ public class CreditAgentServiceImpl implements CreditAgentService {
     }
 
     @Override
-    public CreditAgent save(CreditAgent newCreditAgent) {
-        return creditAgentRepository.save(newCreditAgent);
-    }
-
-    @Override
     public CreditAgent upgrade(CreditAgent creditAgentToUpdate) {
 
         Optional<CreditAgent> agent = creditAgentRepository.findById(creditAgentToUpdate.getUsername());
